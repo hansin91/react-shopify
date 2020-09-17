@@ -1,10 +1,11 @@
 import React from 'react'
-import Carousel from './components/CarouselApp'
+import {Carousel, CollectionCards} from './components'
 
 function Homepage() {
   return(
     <div className="homepage">
       <Carousel />
+      <CollectionCards />
     </div>
   )
 }

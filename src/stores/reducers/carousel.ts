@@ -1,18 +1,18 @@
 import { SET_CAROUSEL_SLIDES, SET_CAROUSEL_ERROR, SET_CAROUSEL_LOADING } from '../actions'
 
-interface IAppState {
+interface ICarouselState {
   readonly slides: Array<any>
   readonly error: string
   readonly loading: boolean
 }
 
-const initialState: IAppState = {
+const initialState: ICarouselState = {
   slides: [],
   error: '',
   loading: false
 }
 
-export default (state = initialState, action: any) => {
+export default (state = initialState, action: any): ICarouselState => {
   switch(action.type) {
     case SET_CAROUSEL_SLIDES:
       return {

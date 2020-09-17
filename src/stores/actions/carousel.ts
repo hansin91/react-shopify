@@ -1,8 +1,8 @@
 import api from '../../api'
-import { Slide } from '../../models'
+import { Collection } from '../../models'
 import { SET_CAROUSEL_SLIDES, SET_CAROUSEL_ERROR, SET_CAROUSEL_LOADING } from './types'
 
-const setCarouselSlides = (slides: Array<Slide>) => ({
+const setCarouselSlides = (slides: Array<Collection>) => ({
   type: SET_CAROUSEL_SLIDES,
   payload: slides
 })
@@ -21,16 +21,16 @@ export const loadCarouselSlides = (slides: Array<any>) => async (dispatch: any) 
   dispatch(setCarouselLoading(true))
   api({
     method: 'GET',
-    url: '/carousel',
+    url: '/collections',
     params: {
       titles: slides.join(',')
     }
   })
   .then(({data}) => {
-    const {slides} = data
+    const {collections} = data
     const carouselSlides = []
-    for (const slide of slides) {
-      const carouselSlide = new Slide()
+    for (const slide of collections) {
+      const carouselSlide = new Collection()
       Object.assign(carouselSlide, slide)
       carouselSlide.image = slide.image.src
       carouselSlides.push(carouselSlide)

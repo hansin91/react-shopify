@@ -5,7 +5,7 @@ import { loadCarouselSlides } from '../../../../stores/actions'
 import { carouselSlides } from '../../../../config'
 import { SpinnerLoading } from '../../../../components'
 import CarouselSlide from '../CarouselSlide'
-import { Slide } from '../../../../interfaces'
+import { Collection } from '../../../../interfaces'
 
 const settings = {
   dots: true,
@@ -33,7 +33,7 @@ function CarouselApp() {
   return (
     <div>
       <Slider {...settings}>
-        {slides && slides.length > 0 && slides.map((slide: Slide) => <CarouselSlide key={slide.id} slide={slide} />)}
+        {slides && slides.length > 0 && slides.map((slide: Collection) => <CarouselSlide key={slide.id} slide={slide} />)}
       </Slider>
     </div>
   )

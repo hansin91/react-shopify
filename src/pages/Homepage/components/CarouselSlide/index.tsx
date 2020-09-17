@@ -1,15 +1,14 @@
-import './styles.scss'
 import React from 'react'
-import { Slide } from '../../../../interfaces';
+import { Collection } from '../../../../interfaces';
 import parser from 'react-html-parser'
 
 interface Props {
-  slide:  Slide
+  slide:  Collection
 }
 
 function CarouselSlide({slide}: Props) {
   return (
-    <div className="carousel-slide">
+    <div className="carousel-slide" style={{ position: 'relative' }}>
       <div style={{
         backgroundImage: `url(${slide.image})`,
         height: '80vh',
@@ -17,7 +16,7 @@ function CarouselSlide({slide}: Props) {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat' }}>
       </div>
-      <div className="carousel-caption">
+      <div className="carousel-caption text-centered-over-image">
         {parser(slide.body_html)}
       </div>
     </div>
