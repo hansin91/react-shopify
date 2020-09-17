@@ -14,7 +14,7 @@ function BannerWrapper() {
   useEffect(() => {
     dispatch(loadBanner(title))
   },[dispatch])
-  if (loading && !banner) {
+  if (loading) {
     return <SpinnerLoading />
   }
   return (

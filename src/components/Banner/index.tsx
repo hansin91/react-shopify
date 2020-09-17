@@ -1,7 +1,7 @@
 import './styles.scss'
 import React from 'react'
 import parse from 'react-html-parser'
-import { Collection } from '../../models'
+import { Collection } from '../../interfaces'
 
 interface Props {
   data: Collection

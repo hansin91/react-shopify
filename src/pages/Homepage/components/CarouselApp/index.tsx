@@ -26,7 +26,7 @@ function CarouselApp() {
     dispatch(loadCarouselSlides(carouselSlides))
   }, [dispatch])
 
-  if (loading && slides && !slides.length) {
+  if (loading) {
     return <SpinnerLoading />
   }
 

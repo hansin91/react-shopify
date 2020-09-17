@@ -33,6 +33,11 @@ export const loadHomepageCards = (slides: Array<any>) => async (dispatch: any) =
       const card = new Collection()
       Object.assign(card, collection)
       card.image = collection.image.src
+      if (collection.handle.includes('card')) {
+        const handleArray = collection.handle.split('-')
+        handleArray.pop()
+        card.handle = handleArray.join('-')
+      }
       cards.push(card)
     }
     dispatch(setCards(cards))

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.scss';
 import { Navbar } from './components'
-import { HomePage } from './pages'
+import { HomePage, Collection } from './pages'
 
 function App() {
   return (
@@ -12,6 +12,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <HomePage />
+          </Route>
+          <Route path="/collections/:title">
+            <Collection />
           </Route>
         </Switch>
       </div>

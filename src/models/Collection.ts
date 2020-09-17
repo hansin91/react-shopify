@@ -3,4 +3,5 @@ export class Collection {
   image!: string
   body_html!: string
   title!: string
+  handle!: string
 }
