@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { Container } from 'react-bootstrap'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import { CollectionCard } from '../../../../components'
 import { homePage } from '../../../../config'
@@ -27,16 +26,14 @@ function CollectionCards() {
   },[dispatch])
   return (
     <div className="collection-cards" style={{ paddingTop: '50px' }}>
-      <Container>
-        <div className="row">
-          {cards.map((card: any) =>
-            <CollectionCard
-              key={card.id}
-              className={className}
-              loading={loading}
-              collection={card} />)}
-        </div>
-      </Container>
+      <div className="row">
+        {cards.map((card: any) =>
+          <CollectionCard
+            key={card.id}
+            className={className}
+            loading={loading}
+            collection={card} />)}
+      </div>
     </div>
   )
 }

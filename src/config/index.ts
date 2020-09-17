@@ -7,7 +7,16 @@ export const carouselSlides = [
 export const homePage = {
   front: [
     'October Specials',
-    'Art Kits',
-    'Impromptu'
+    'Art Kits Card',
+    'Impromptu Card'
+  ],
+  banners: [
+    'Banner-1'
   ]
 }
+
+export const collections = [
+  'Sketchbooks',
+  'Art Kits',
+  'Impromptu'
+]
