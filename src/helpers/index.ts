@@ -13,3 +13,7 @@ export const parseClassName = (position: string) => {
   }
   return className
 }
+
+export const parseCurrency = (value: number) => {
+  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value)
+}

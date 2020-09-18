@@ -3,10 +3,12 @@ import carousel from './carousel'
 import homepage from './homepage'
 import banner from './banner'
 import collection from './collection'
+import product from './product'
 
 export default combineReducers({
   carousel,
   homepage,
   banner,
-  collection
+  collection,
+  product
 })

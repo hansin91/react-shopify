@@ -4,7 +4,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import { loadCollection } from '../../stores/actions'
 import { SpinnerLoading } from '../../components'
 import { collections } from '../../config'
-import Image from './components/Image'
+import { Products, Image } from './components'
 
 const getPosition = (handle: string): string => {
   const fitered = collections.filter((collection) => collection.handle === handle)
@@ -34,6 +34,7 @@ function Collection() {
   return (
     <div className="collection-page">
       {collection && <Image position={position} collection={collection} />}
+      {collection && <Products collection={collection} />}
     </div>
   )
 }

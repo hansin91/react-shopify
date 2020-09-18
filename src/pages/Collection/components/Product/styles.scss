@@ -1,0 +1,28 @@
+.product-card {
+  padding-bottom: 30px;
+  &:hover {
+    text-decoration: none;
+  }
+  &-price {
+    padding-bottom: 20px;
+  }
+  &-text {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #003f59;
+  }
+  &-price {
+    &-display {
+      text-align: right;
+      margin-left: 5px;
+      color: #003f59;
+    }
+  }
+  &-info {
+    background-color: #f6f6f6;
+    text-align: center;
+    p {
+      margin: 0;
+    }
+  }
+}
