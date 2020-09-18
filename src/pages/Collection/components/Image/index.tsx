@@ -20,7 +20,7 @@ function Image({collection, position}: Props) {
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat'}}>
       <Container className={`${className}`} style={{ height: '100%'}}>
-        <div className="text-center font-weight-bold color-white">
+        <div className="text-center col-md-4 font-weight-bold color-white">
           {parse(collection.body_html)}
         </div>
       </Container>
