@@ -1,7 +1,7 @@
 import api from '../../api'
-import { Product, ProductImage } from '../../models'
-import { ProductVariant } from '../../models/ProductVariant'
-import { SET_PRODUCTS, SET_PRODUCTS_ERROR, SET_PRODUCTS_LOADING } from './types'
+import { ProductParam } from '../../interfaces'
+import { Product, ProductImage, ProductVariant } from '../../models'
+import { SET_PRODUCT, SET_PRODUCTS, SET_PRODUCTS_ERROR, SET_PRODUCTS_LOADING } from './types'
 
 const setError = (error: string) => ({
   type: SET_PRODUCTS_ERROR,
@@ -18,15 +18,17 @@ const setProducts = (products: Product[]) =>({
   payload: products
 })
 
+const setProduct = (product: Product) => ({
+  type: SET_PRODUCT,
+  payload: product
+})
 
-export const loadProducts = (collectionId: number) => async (dispatch: any) => {
+export const loadProducts = (params: ProductParam) => async (dispatch: any) => {
   dispatch(setLoading(true))
   api({
     method: 'GET',
     url: '/products',
-    params: {
-      collectionId
-    }
+    params
   })
   .then(({data}) =>{
     const {products} = data
@@ -69,7 +71,13 @@ export const loadProducts = (collectionId: number) => async (dispatch: any) => {
       product.variants = variants
       result.push(product)
     }
-    dispatch(setProducts(result))
+    const {collectionId, handle} = params
+    if (collectionId) {
+      dispatch(setProducts(result))
+    }
+    if (handle) {
+      dispatch(setProduct(result[0]))
+    }
   })
   .catch((err) => {
     const error = err.response.data.error

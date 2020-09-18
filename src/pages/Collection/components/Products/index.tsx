@@ -14,8 +14,11 @@ function Products({collection}: Props) {
   const dispatch = useDispatch()
   const loading = useSelector((state: RootStateOrAny) => state.product.loading)
   const products = useSelector((state: RootStateOrAny) => state.product.products)
+  const params = {
+    collectionId: collection.id
+  }
   useEffect(() => {
-    dispatch(loadProducts(collection.id))
+    dispatch(loadProducts(params))
   },[dispatch, collection.id])
 
   if (loading) {

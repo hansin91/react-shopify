@@ -1,8 +1,16 @@
+.collection-card {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .card {
   &-text {
-   // justify-content: flex-start;
    flex-direction: column;
    justify-content: flex-start;
+   h2 {
+     margin-bottom: 0;
+   }
   }
   &-title {
     color: #fff;

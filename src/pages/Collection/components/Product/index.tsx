@@ -1,5 +1,6 @@
 import './styles.scss'
 import React from 'react'
+import { RootStateOrAny, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Product as IProduct } from '../../../../interfaces'
 import { parseCurrency } from '../../../../helpers'
@@ -9,8 +10,9 @@ interface Props {
 }
 
 function Product({data}: Props) {
+  const collection = useSelector((state: RootStateOrAny) => state.collection.collection)
   return (
-    <Link to="/" className="col-sm-4 product-card">
+    <Link to={`/collections/${collection.handle}/products/${data.handle}`} className="col-sm-4 product-card">
       <div className="product-card-wrapper">
         <div className="product-card-image">
           <img className="img-responsive w-100" src={data.image} alt={data.title} />
