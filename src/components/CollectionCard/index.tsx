@@ -3,6 +3,7 @@ import React from 'react'
 import { Collection } from '../../interfaces'
 import SpinnerLoading from '../SpinnerLoading'
 import parse from 'react-html-parser'
+import { Container } from 'react-bootstrap'
 
 interface Props {
   collection: Collection
@@ -22,9 +23,11 @@ function CollectionCard({className, collection, loading}: Props) {
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat'}}>
-      </div>
-      <div className={`text-centered-over-image ${collection.title !== 'October Specials' ? 'card-text' : ''}`}>
-        {parse(collection.body_html)}
+        <Container className={`text-position-center text-center ${collection.title !== 'October Specials' ? 'card-text' : ''}`} style={{ height: '100%' }}>
+          <div style={{paddingTop: '30px'}}>
+            {parse(collection.body_html)}
+          </div>
+        </Container>
       </div>
     </div>
   )

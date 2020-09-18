@@ -1,6 +1,7 @@
 import React from 'react'
 import { Collection } from '../../../../interfaces';
 import parser from 'react-html-parser'
+import { Container } from 'react-bootstrap';
 
 interface Props {
   slide:  Collection
@@ -15,9 +16,11 @@ function CarouselSlide({slide}: Props) {
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat' }}>
-      </div>
-      <div className="carousel-caption text-centered-over-image">
-        {parser(slide.body_html)}
+        <Container className="text-position-center text-center" style={{ height: '100%'}}>
+          <div className="carousel-text">
+            {parser(slide.body_html)}
+          </div>
+        </Container>
       </div>
     </div>
   )

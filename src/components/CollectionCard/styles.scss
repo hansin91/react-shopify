@@ -1,7 +1,8 @@
 .card {
   &-text {
-    text-align: center;
-    top: 30%;
+   // justify-content: flex-start;
+   flex-direction: column;
+   justify-content: flex-start;
   }
   &-title {
     color: #fff;

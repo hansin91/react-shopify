@@ -13,7 +13,7 @@ function App() {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route path="/collections/:title">
+          <Route path="/collections/:handle">
             <Collection />
           </Route>
         </Switch>

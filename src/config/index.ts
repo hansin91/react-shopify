@@ -16,7 +16,19 @@ export const homePage = {
 }
 
 export const collections = [
-  'Sketchbooks',
-  'Art Kits',
-  'Impromptu'
+  {
+    name: 'Sketchbooks',
+    handle: 'sketchbooks',
+    position: 'left'
+  },
+  {
+    name: 'Art Kits',
+    handle: 'art-kits',
+    position: 'right'
+  },
+  {
+    name: 'Impromptu',
+    handle: 'impromptu',
+    position: 'center'
+  }
 ]

@@ -7,11 +7,19 @@ import { loadCollections } from '../../stores/actions'
 import { Collection } from '../../interfaces'
 import NavDropdownMenu from '../NavDropdownMenu'
 
+const parseParamCollections = (data: Array<any>) => {
+  const titles = []
+  for (const d of data ) {
+    titles.push(d.name)
+  }
+  return titles
+}
+
 function NavbarApp() {
   const dispatch = useDispatch()
   const collections = useSelector((state: RootStateOrAny) => state.collection.collections)
   useEffect(() => {
-    dispatch(loadCollections(titles))
+    dispatch(loadCollections(parseParamCollections(titles)))
   },[dispatch])
 
   return (

@@ -1,7 +1,10 @@
 .text-position-right {
-  position: absolute;
-  top: 40%;
-  right: 0px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.banner-title {
   color: #fff;
   background-color: #4353B3;
   padding: 1rem;
