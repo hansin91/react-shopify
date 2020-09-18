@@ -1,4 +1,5 @@
 export * from './Collection'
+export * from './CollectionParam'
 export * from './Product'
 export * from './ProductImage'
 export * from './ProductParam'
