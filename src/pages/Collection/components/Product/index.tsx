@@ -21,7 +21,7 @@ function Product({data}: Props) {
           <p className="lead product-card-text text-center">{data.title}</p>
           <div className="product-card-price">
             <small className="text-muted"><span>from</span></small>
-            <span className="product-card-price-display">{parseCurrency(data.variants[0].price)}</span>
+            <span className="product-card-price-display">{parseCurrency(data.minPrice.amount)}</span>
           </div>
         </div>
       </div>

@@ -1,0 +1,11 @@
+.product-info {
+  &-collection {
+    &:hover {
+      font-weight: 500;
+    }
+  }
+  &-title {
+    font-size: 2rem;
+    color: #003f59;
+  }
+}

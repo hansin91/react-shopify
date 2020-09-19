@@ -1,4 +1,6 @@
 export * from './Collection'
-export * from './ProductImage'
 export * from './Product'
+export * from './ProductImage'
 export * from './ProductVariant'
+export * from './ProductOption'
+export * from './ProductPrice'

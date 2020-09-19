@@ -1,6 +1,5 @@
 export interface ProductVariant {
-  id: number
-  grams: number
+  id: string
   price: number
   currency: string
   sku: string

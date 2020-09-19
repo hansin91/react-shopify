@@ -1,6 +1,6 @@
+import './App.scss';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import './App.scss';
 import { Navbar } from './components'
 import { HomePage, Collection, ProductDetail } from './pages'
 
@@ -13,7 +13,7 @@ function App() {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route exact path="/collections/:handle/products/:product">
+          <Route exact path="/collections/:name/products/:product">
             <ProductDetail />
           </Route>
           <Route exact path="/collections/:handle">

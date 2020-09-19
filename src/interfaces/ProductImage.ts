@@ -1,6 +1,6 @@
 export interface ProductImage {
-  id: number
-  height: number
-  width: number
-  src: string
+  id: string
+  altText: string
+  originalSrc: string
+  transformedSrc: string
 }
