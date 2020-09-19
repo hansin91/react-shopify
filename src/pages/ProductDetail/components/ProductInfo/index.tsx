@@ -15,7 +15,7 @@ function ProductInfo({product, collection}: Props) {
       <div className="product-info" style={{padding: '0 0.7rem'}}>
         <div className="product-info-detail">
           <Link className="text-decoration-none product-info-collection" to={`/collections/${collection}`}>
-            <span style={{color: '#879898'}}>{product.product_type}</span>
+            <span style={{color: '#879898', display: 'block', paddingBottom: '10px'}}>{product.product_type}</span>
           </Link>
           <h1 className="product-info-title">{product.title}</h1>
           <div style={{color:'#879898'}}>{parse(product.description_html)}</div>
