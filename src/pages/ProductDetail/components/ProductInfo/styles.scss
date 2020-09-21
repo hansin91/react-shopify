@@ -32,3 +32,20 @@
     }
   }
 }
+
+.p_a_t_c {
+  padding: 1em 20px;
+  font-size: 1em;
+  width: 100%;
+}
+
+.purchase-btn {
+  color: #fff;
+  background-color: #003f59;
+  border-color: #003f59;
+
+  &:hover {
+    background-color: #000;
+    border-color: #000;
+  }
+}
