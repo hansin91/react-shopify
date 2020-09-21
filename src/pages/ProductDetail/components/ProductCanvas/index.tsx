@@ -1,6 +1,7 @@
 import './styles.scss'
 import React, { Fragment, useEffect} from 'react'
 import Konva from 'konva'
+import { stages } from 'konva/types/Stage'
 
 interface Props {
   visible: boolean
@@ -33,42 +34,56 @@ function ProductCanvas({visible, backgroundImage, name, imageFile}: Props) {
     const url = URL.createObjectURL(imageFile);
     const img = new window.Image()
     img.src = url;
-
     img.onload = function() {
 
       const img_width = img.width;
       const img_height = img.height;
-
       // calculate dimensions to get max 300px
       const max = 500;
       const ratio = (img_width > img_height ? (img_width / max) : (img_height / max))
-
-      // now load the Konva image
-      const group = new Konva.Group()
       const image = new Konva.Image({
         image: img,
-        x: 970,
-        y: 1100,
+        x: STAGE_WIDTH / 2,
+        y: STAGE_HEIGHT / 2,
         width: img_width/ratio,
         height: img_height/ratio,
         draggable: true,
       });
-      // group.add(image)
-      // layer.add(group)
+      image.offsetX(image.width() / 2);
       layer.add(image)
       layer.batchDraw()
     }
   }
 
   const renderCanvas = (imageFile?: any) => {
+
     const stage = new Konva.Stage({
       container: 'container',
       width: STAGE_WIDTH,
       height: STAGE_HEIGHT,
       visible,
     });
+
     const layer = new Konva.Layer()
     stage.add(layer);
+    drawBackground(backgroundImage.current, layer)
+    const text = new Konva.Text({
+      x: stage.width() / 2,
+      y: (stage.width() / 2) - 200,
+      fontSize: 100,
+      align: 'center',
+      verticalAlign: 'middle',
+      fontFamily: 'Calibri',
+      text: name,
+      fill: '#f7d976'
+    });
+    text.offsetX(text.width() / 2);
+    layer.add(text)
+    if (imageFile) {
+      drawImage(imageFile, layer)
+    }
+    layer.draw();
+
     function fitStageIntoParentContainer () {
       const container = document.querySelector('#stage-parent') as any
       if (container) {
@@ -85,26 +100,6 @@ function ProductCanvas({visible, backgroundImage, name, imageFile}: Props) {
 
     fitStageIntoParentContainer();
     window.addEventListener('resize', fitStageIntoParentContainer)
-
-    drawBackground(backgroundImage.current, layer)
-    const text = new Konva.Text({
-      x: 970,
-      y: 970,
-      fontSize: 100,
-      align: 'center',
-      verticalAlign: 'middle',
-      fontFamily: 'Calibri',
-      text: name,
-      fill: '#f7d976'
-    });
-    // group2.add(text);
-    layer.add(text)
-
-    if (imageFile) {
-      drawImage(imageFile, layer)
-    }
-
-    layer.draw();
   }
 
   useEffect(() => {
