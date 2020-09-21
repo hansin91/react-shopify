@@ -35,7 +35,7 @@ export const loadProducts = (params: ProductParam) => async (dispatch: any) => {
     const result = []
     for (const p of products) {
       const product = new Product()
-      const {id, body_html, handle, image, title, product_type} = p
+      const {id, handle, image, title, product_type} = p
       product.id = id
       // product.body_html = body_html
       product.image = image.src
@@ -47,7 +47,7 @@ export const loadProducts = (params: ProductParam) => async (dispatch: any) => {
       const variants = []
       for (const image of p.images) {
         const productImage  = new ProductImage()
-        const {id, width, height, src} = image
+        const {id} = image
         productImage.id = id
         // productImage.height = height
         // productImage.width = width
@@ -55,7 +55,7 @@ export const loadProducts = (params: ProductParam) => async (dispatch: any) => {
         images.push(productImage)
       }
       for (const v of p.variants) {
-        const {id, presentment_prices, grams, title, sku, weight, weight_unit} = v
+        const {id, presentment_prices, title, sku, weight, weight_unit} = v
         const variant = new ProductVariant()
         variant.id = id
         // variant.grams = grams
