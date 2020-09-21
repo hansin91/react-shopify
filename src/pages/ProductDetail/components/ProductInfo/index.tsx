@@ -1,10 +1,11 @@
 import './styles.scss'
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import parse from 'react-html-parser'
 import { debounce } from 'lodash'
-import { Form, Button } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { Product } from '../../../../interfaces'
+import { Product, ProductOption, ProductVariant } from '../../../../interfaces'
+import { parseCurrency } from '../../../../helpers'
 
 interface Props {
   product: Product
@@ -15,19 +16,31 @@ interface Props {
 }
 
 function ProductInfo({product, collection, onFocusInput, onImageFile, onNamePersonalization}: Props) {
+  const [price, setPrice] = useState(product.minPrice.amount)
+
   const debounceLoadData = useCallback(debounce(onNamePersonalization, 500), []);
   const handleInput = (input: string) => {
     debounceLoadData(input);
   }
 
   const handleFile = (e: any) => {
-    e.persist();
+    e.persist()
     onImageFile(e.target.files[0])
   }
 
   const handleQuantity = (quantity: number) => {
     console.log(quantity)
   }
+
+  const handleSelect = (e: any) => {
+    e.persist()
+    console.log(e.target.value)
+    const filter = product.variants.filter((variant: ProductVariant) => variant.title === e.target.value)
+    const variant = filter[0]
+    setPrice(variant.price)
+  }
+
+  console.log(product)
 
   return(
     <div className="col-md-5 col-sm-12 col-xs-12">
@@ -38,6 +51,9 @@ function ProductInfo({product, collection, onFocusInput, onImageFile, onNamePers
           </Link>
           <h1 className="product-info-title">{product.title}</h1>
           <div style={{color:'#879898'}}>{parse(product.description_html)}</div>
+          <div className="product-info-price" style={{paddingBottom: '10px'}}>
+            <span className="text-right">{parseCurrency(Number(price))}</span>
+          </div>
           <div className="row">
             <div className="col-md-10">
               <div className="pplr-wrapper pplr-dropdown pplr-cover">
@@ -55,6 +71,16 @@ function ProductInfo({product, collection, onFocusInput, onImageFile, onNamePers
                     <Form.Label className="pplrlabel">Image</Form.Label>
                     <Form.Control onChange={handleFile}  type="file" accept="image/*"></Form.Control>
                   </Form.Group>
+                  {product.options.map((option: ProductOption, i: number) => {
+                    return (
+                      <Form.Group key={i}>
+                         <Form.Label className="pplrlabel">{option.name}</Form.Label>
+                        <select onChange={handleSelect} defaultValue={option.values[0]} className="form-control">
+                          {option.values.map((o, i) => <option key={i} value={o}>{o}</option> )}
+                        </select>
+                      </Form.Group>
+                    )
+                  })}
                   <Form.Group>
                     <Form.Label className="pplrlabel">Quantity</Form.Label>
                     <input type="number"
