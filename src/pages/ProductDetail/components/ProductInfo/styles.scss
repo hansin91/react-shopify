@@ -8,4 +8,27 @@
     font-size: 2rem;
     color: #003f59;
   }
+
+  .pplr-wrapper {
+    margin-bottom: 15px;
+  }
+
+  label.pplrlabel {
+    color: #6dc3c2;
+    font-weight: normal;
+    padding: 0px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  input.pplrinput {
+    border: none;
+    border-bottom: 1px solid #dddddd;
+    border-radius: 0;
+    padding: 1rem 0.5rem;
+    outline: none !important;
+    &:focus {
+      outline: none !important;
+    }
+  }
 }

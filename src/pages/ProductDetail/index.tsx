@@ -11,6 +11,9 @@ function ProductDetail() {
   const {product, name} = useParams() as any
   const [error, setError] = useState('')
   const [productDetail, setProductDetail] = useState(null as any)
+  const [namePersonalisation, setNamePersonalisation] = useState('Your Name')
+  const [canvasVisible, setCanvasVisible] = useState(false)
+  const [imageFile, setImageFile] = useState(null) as any
   const [ loadProductDetail, { loading } ] =
     useLazyQuery(FETCH_PRODUCT_DETAIL, { variables: { first: 1, query: product },
       fetchPolicy: 'cache-and-network',
@@ -30,6 +33,22 @@ function ProductDetail() {
     loadProductDetail()
   },[product])
 
+  const onCanvasVisible = (isVisible: boolean) => {
+    setCanvasVisible(isVisible)
+  }
+
+  const onNamePersonalization = (name: string) => {
+    if (!name) {
+      name = 'Your Name'
+    }
+    setNamePersonalisation(name)
+  }
+
+  const onImageFile = (file: any) => {
+    setCanvasVisible(true)
+    setImageFile(file)
+  }
+
   if (loading) {
     return <SpinnerLoading />
   }
@@ -39,8 +58,18 @@ function ProductDetail() {
       <Container>
         {productDetail &&
           <div className="row">
-            <ProductImage product={productDetail} />
-            <ProductInfo collection={name} product={productDetail} />
+            <ProductImage
+              onCanvasVisible={onCanvasVisible}
+              canvasVisible={canvasVisible}
+              name={namePersonalisation}
+              imageFile={imageFile}
+              product={productDetail} />
+            <ProductInfo
+              onImageFile={onImageFile}
+              onNamePersonalization={(name: string) => onNamePersonalization(name)}
+              onFocusInput={onCanvasVisible}
+              collection={name}
+              product={productDetail} />
           </div>
         }
       </Container>

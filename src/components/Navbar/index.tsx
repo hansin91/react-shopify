@@ -33,19 +33,17 @@ function NavbarApp() {
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav className="mr-auto">
-        <Nav.Link href="#features">Features</Nav.Link>
-        <Nav.Link href="#pricing">Pricing</Nav.Link>
         <NavDropdown title="Collections" id="collasible-nav-dropdown">
           {collections && collections.length > 0
             && collections.map((collection: Collection) => <NavDropdownMenu key={collection.id} data={collection} /> )}
         </NavDropdown>
       </Nav>
-      <Nav>
+      {/* <Nav>
         <Nav.Link href="#deets">More deets</Nav.Link>
         <Nav.Link eventKey={2} href="#memes">
           Dank memes
         </Nav.Link>
-      </Nav>
+      </Nav> */}
     </Navbar.Collapse>
   </Navbar>
   )
