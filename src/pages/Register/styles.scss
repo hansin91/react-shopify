@@ -1,0 +1,15 @@
+.register-container, .register-wrapper {
+  height: 100vh;
+}
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.register-form {
+  padding: 1.5rem;
+  background-color: #000;
+  border-radius: 15px;
+}

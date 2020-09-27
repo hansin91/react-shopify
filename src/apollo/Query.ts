@@ -17,18 +17,14 @@ export const FETCH_PRODUCTS = gql`
                 productType
                 tags
                 vendor
-                presentmentPriceRanges(first: 1) {
-                  edges {
-                    node {
-                      maxVariantPrice {
-                        amount
-                        currencyCode
-                      }
-                      minVariantPrice {
-                        amount
-                        currencyCode
-                      }
-                    }
+                priceRange {
+                  maxVariantPrice {
+                    amount
+                    currencyCode
+                  }
+                  minVariantPrice {
+                    amount
+                    currencyCode
                   }
                 }
                 images(first: 20) {
@@ -70,6 +66,23 @@ export const FETCH_PRODUCTS = gql`
   }
 `
 
+export const FETCH_CUSTOMER = gql`
+  query Customer($customerAccessToken: String!)
+  {
+    customer(customerAccessToken: $customerAccessToken) {
+      id
+      email
+      firstName
+      lastName
+      phone
+      displayName
+      lastIncompleteCheckout{
+        id
+      }
+    }
+  }
+`
+
 export const FETCH_PRODUCT_DETAIL = gql`
   query Product($first: Int!, $query: String!)
   {
@@ -89,18 +102,14 @@ export const FETCH_PRODUCT_DETAIL = gql`
             name
             values
           }
-          presentmentPriceRanges(first: 1) {
-            edges {
-              node {
-                maxVariantPrice {
-                  amount
-                  currencyCode
-                }
-                minVariantPrice {
-                  amount
-                  currencyCode
-                }
-              }
+          priceRange {
+            maxVariantPrice {
+              amount
+              currencyCode
+            }
+            minVariantPrice {
+              amount
+              currencyCode
             }
           }
           images(first: 20) {

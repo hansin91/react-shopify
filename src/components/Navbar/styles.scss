@@ -1,0 +1,25 @@
+.user-profile {
+  &-wrapper {
+    color: #fff;
+    cursor: pointer;
+  }
+  &-name {
+    max-width: 40px;
+    max-height: 40px;
+    background: #007bff;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+}
+
+.navbar-shopping-bag {
+  font-size: 1.5rem;
+  color: #fff;
+  padding: 0 1.5rem;
+  cursor: pointer;
+}

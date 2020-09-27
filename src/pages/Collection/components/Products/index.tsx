@@ -15,6 +15,7 @@ interface Props {
 function Products({collection}: Props) {
   const [error, setError] = useState('')
   const [products, setProducts] = useState([] as MProduct[])
+
   const [ loadProductsCollection, { loading } ] =
     useLazyQuery(FETCH_PRODUCTS, { variables: { first: 1, query: collection.id.toString() },
       fetchPolicy: 'cache-and-network',

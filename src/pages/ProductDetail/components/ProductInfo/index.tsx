@@ -13,10 +13,12 @@ interface Props {
   onFocusInput: Function
   onNamePersonalization: any
   onImageFile: Function
+  onAddToCart: Function
 }
 
-function ProductInfo({product, collection, onFocusInput, onImageFile, onNamePersonalization}: Props) {
-  const [price, setPrice] = useState(product.minPrice.amount)
+function ProductInfo({product, collection, onAddToCart, onFocusInput, onImageFile, onNamePersonalization}: Props) {
+  const [selectedProduct, setSelectedProduct] = useState(product.variants[0])
+  const [quantity, setQuantity] = useState(1)
 
   const debounceLoadData = useCallback(debounce(onNamePersonalization, 500), []);
   const handleInput = (input: string) => {
@@ -29,18 +31,33 @@ function ProductInfo({product, collection, onFocusInput, onImageFile, onNamePers
   }
 
   const handleQuantity = (quantity: number) => {
-    console.log(quantity)
+    setQuantity(quantity)
   }
 
   const handleSelect = (e: any) => {
     e.persist()
-    console.log(e.target.value)
     const filter = product.variants.filter((variant: ProductVariant) => variant.title === e.target.value)
     const variant = filter[0]
-    setPrice(variant.price)
+    setSelectedProduct(variant)
   }
 
-  console.log(product)
+  const addToCart = (e: any) => {
+    e.preventDefault()
+    const input = {
+      selectedProduct,
+      quantity
+    }
+    // const lineItems = [{
+    //   variantId: id,
+    //   quantity,
+    //   customAttributes: [{key: "url", value: "hansin"}]
+    // }]
+    // const input = {
+    //   lineItems,
+    //   email: 'johncena@gmail.com'
+    // }
+    onAddToCart(input)
+  }
 
   return(
     <div className="col-md-5 col-sm-12 col-xs-12">
@@ -52,12 +69,12 @@ function ProductInfo({product, collection, onFocusInput, onImageFile, onNamePers
           <h1 className="product-info-title">{product.title}</h1>
           <div style={{color:'#879898'}}>{parse(product.description_html)}</div>
           <div className="product-info-price" style={{paddingBottom: '10px'}}>
-            <span className="text-right">{parseCurrency(Number(price))}</span>
+            <span className="text-right">{parseCurrency(Number(selectedProduct.price))}</span>
           </div>
           <div className="row">
             <div className="col-md-10">
               <div className="pplr-wrapper pplr-dropdown pplr-cover">
-                <Form>
+                <Form onSubmit={addToCart}>
                   <Form.Group>
                     <Form.Label className="pplrlabel">Name Personalisation</Form.Label>
                     <Form.Control
@@ -87,7 +104,7 @@ function ProductInfo({product, collection, onFocusInput, onImageFile, onNamePers
                       onChange={(e: any) => handleQuantity(Number(e.target.value))}
                       min="1"
                       className="pplrlabel form-control"
-                      defaultValue="1" />
+                      defaultValue={quantity} />
                   </Form.Group>
                   <Form.Group>
                    <input type="submit" className="btn btn-primary p_a_t_c purchase-btn" value="Add to bag"/>

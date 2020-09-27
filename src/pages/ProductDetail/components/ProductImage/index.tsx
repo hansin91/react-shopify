@@ -9,46 +9,69 @@ interface Props {
   name: string
   canvasVisible: boolean
   onCanvasVisible: Function
+  onSetImagePositionY: Function
+  onSetImagePositionX: Function
+  onSetCanvas: Function
   imageFile: any
+  imagePositionX: number
+  imagePositionY: number
 }
 
 const getProductImages = (images: Array<any>) => {
   const result = []
+  let last
+  let index = 1
   for (const i of images as IProductImage[]) {
     const image = {
-      original: i.transformedSrc,
-      thumbnail: i.transformedSrc,
-      originalAlt: i.altText
+      original: i.originalSrc,
+      thumbnail: i.originalSrc,
+      originalAlt: i.altText,
+      position: index
+    }
+    if (!image.originalAlt) {
+      last = image
     }
     result.push(image)
+    index++
   }
-  const last = result.pop()
+  result.pop()
   return {
     last,
     result
   }
 }
 
-function ProductImage({product, name, canvasVisible, onCanvasVisible, imageFile}: Props) {
+function ProductImage({
+    product,
+    name,
+    canvasVisible,
+    imagePositionX,
+    imagePositionY,
+    onCanvasVisible,
+    onSetImagePositionY,
+    onSetImagePositionX,
+    onSetCanvas,
+    imageFile
+  }: Props) {
   const imageGalleryRef = useRef() as any
 
-  const handleClick = (e: any) => {
+  const handleClick = () => {
     onCanvasVisible(false)
   }
 
   const [productImages, setProductImages] = useState([]) as any
   const [designImage, setDesignImage] = useState([]) as any
-  const imageRef = React.createRef() as any
   useEffect(() => {
     let images = getProductImages(product.images)
-    setDesignImage(images.last)
-    setProductImages(images.result)
+    const {last, result} = images
+    setDesignImage(last)
+    setProductImages(result)
   }, [product.id])
 
   useEffect(() => {
     if (canvasVisible) {
       const {current} = imageGalleryRef
-      current.slideToIndex(3)
+      current.slideToIndex(0)
     }
   },[canvasVisible])
 
@@ -57,9 +80,18 @@ function ProductImage({product, name, canvasVisible, onCanvasVisible, imageFile}
       <div className="image-gallery-image">
         <div className="item pplr">
           <img src={item.original} alt={product.title} className="w-100" />
-          {item.originalAlt &&
+          {item.position === 1 && canvasVisible &&
             <Fragment>
-              <ProductCanvas imageFile={imageFile} visible={canvasVisible} name={name} backgroundImage={imageRef} />
+              <ProductCanvas
+                imagePositionX={imagePositionX}
+                imagePositionY={imagePositionY}
+                onSetImagePositionY={onSetImagePositionY}
+                onSetImagePositionX={onSetImagePositionX}
+                onSetCanvas={onSetCanvas}
+                imageFile={imageFile}
+                visible={canvasVisible}
+                name={name}
+                backgroundImage={designImage} />
             </Fragment>
           }
         </div>
@@ -76,10 +108,9 @@ function ProductImage({product, name, canvasVisible, onCanvasVisible, imageFile}
             showFullscreenButton={false}
             showPlayButton={false}
             ref={imageGalleryRef}
-            onThumbnailClick={(e: any, index: number) => handleClick(index) }
+            onThumbnailClick={handleClick}
             renderItem={(item: any) => renderItem(item)}
             items={productImages} />
-            <img ref={imageRef} src={designImage.original} alt="" className="hide w-100" />
         </Fragment>
        }
     </div>

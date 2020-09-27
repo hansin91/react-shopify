@@ -25,7 +25,7 @@ export const parseProducts = (data: any) => {
   const products = []
   for (const edge of edges) {
     const {node} = edge
-    const {id, title, description, descriptionHtml, handle, productType, tags, vendor, variants: {edges}, images, options, presentmentPriceRanges} = node
+    const {id, title, description, descriptionHtml, handle, productType, tags, vendor, variants: {edges}, images, options, priceRange} = node
     const product = new Product()
     product.id = id
     product.title = title
@@ -66,14 +66,14 @@ export const parseProducts = (data: any) => {
       Object.assign(option, op)
       productOptions.push(option)
     }
-    if (presentmentPriceRanges) {
-      const {edges} = presentmentPriceRanges
-      const [data] = edges
-      const {node: {maxVariantPrice, minVariantPrice}} = data
+    if (priceRange) {
+      const {maxVariantPrice, minVariantPrice} = priceRange
       const maxPrice = new ProductPrice()
-      Object.assign(maxPrice, maxVariantPrice)
+      maxPrice.amount = Number(maxVariantPrice.amount)
+      maxPrice.currency = maxVariantPrice.currencyCode
       const minPrice = new ProductPrice()
-      Object.assign(minPrice, minVariantPrice)
+      minPrice.amount =  Number(minVariantPrice.amount)
+      minPrice.currency = minVariantPrice.currencyCode
       product.maxPrice = maxPrice
       product.minPrice = minPrice
     }

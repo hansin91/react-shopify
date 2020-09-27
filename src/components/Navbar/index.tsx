@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react'
+import './styles.scss'
+import React, { Fragment, useEffect } from 'react'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faShoppingBasket } from '@fortawesome/free-solid-svg-icons'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import { collections as titles } from '../../config'
 import { loadCollections } from '../../stores/actions'
@@ -18,6 +21,8 @@ const parseTitles = (data: Array<any>) => {
 function NavbarApp() {
   const dispatch = useDispatch()
   const collections = useSelector((state: RootStateOrAny) => state.collection.collections)
+  const isAuthenticated = useSelector((state: RootStateOrAny) => state.auth.isAuthenticated)
+  const user = useSelector((state: RootStateOrAny) =>state.auth.user)
   const params = {
     titles: parseTitles(titles).join(',')
   }
@@ -38,12 +43,25 @@ function NavbarApp() {
             && collections.map((collection: Collection) => <NavDropdownMenu key={collection.id} data={collection} /> )}
         </NavDropdown>
       </Nav>
-      {/* <Nav>
-        <Nav.Link href="#deets">More deets</Nav.Link>
-        <Nav.Link eventKey={2} href="#memes">
-          Dank memes
-        </Nav.Link>
-      </Nav> */}
+      {!isAuthenticated &&
+        <Nav>
+          <Link to="/login" className="nav-link">Login</Link>
+        </Nav>
+      }
+      {isAuthenticated && user &&
+        <Fragment>
+          <Nav>
+            <div className="navbar-shopping-bag">
+              <FontAwesomeIcon icon={faShoppingBasket} />
+            </div>
+          </Nav>
+          <Nav>
+            <div className="user-profile-wrapper">
+              <div className="user-profile-name">{user.displayName[0]}</div>
+            </div>
+          </Nav>
+        </Fragment>
+      }
     </Navbar.Collapse>
   </Navbar>
   )

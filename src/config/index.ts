@@ -32,3 +32,14 @@ export const collections = [
     position: 'center'
   }
 ]
+
+export const STAGE_WIDTH = 2400
+export const STAGE_HEIGHT = 2400
+export const STAGE_WIDTH_DIFF = 200
+export const STAGE_HEIGHT_DIFF_TOP = 80
+export const STAGE_HEIGHT_DIFF_BOTTOM = 200
+
+export const IMAGE_POSITION = {
+  x: STAGE_WIDTH / 2,
+  y: (STAGE_HEIGHT / 2) - STAGE_HEIGHT_DIFF_TOP
+}

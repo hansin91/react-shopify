@@ -1,0 +1,15 @@
+.login-container, .login-wrapper {
+  height: 100vh;
+}
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.login-form {
+  padding: 1.5rem;
+  background-color: #000;
+  border-radius: 15px;
+}
