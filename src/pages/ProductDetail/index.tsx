@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 import jsPdf from 'jspdf'
 import { RootStateOrAny, useSelector } from 'react-redux'
@@ -15,6 +15,7 @@ import { IMAGE_POSITION } from '../../config'
 
 function ProductDetail() {
   const {product, name} = useParams() as any
+  const history = useHistory()
   const [error, setError] = useState('')
   const [productDetail, setProductDetail] = useState(null as any)
   const [namePersonalisation, setNamePersonalisation] = useState('Your Name')
@@ -187,6 +188,8 @@ function ProductDetail() {
       } else {
         addLineItems({variables: {checkoutId: localStorage.getItem('checkout'), lineItems}})
       }
+    } else {
+      history.push('/login')
     }
     // const canvas = document.getElementsByTagName('canvas')[0]
     // const fileToUpload = dataURLtoFile(canvas.toDataURL(), 'image')
