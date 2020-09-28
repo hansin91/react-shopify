@@ -75,19 +75,23 @@ function ProductInfo({product, collection, onAddToCart, onFocusInput, onImageFil
             <div className="col-md-10">
               <div className="pplr-wrapper pplr-dropdown pplr-cover">
                 <Form onSubmit={addToCart}>
-                  <Form.Group>
-                    <Form.Label className="pplrlabel">Name Personalisation</Form.Label>
-                    <Form.Control
-                      onChange={(e: any) => handleInput(e.target.value)}
-                      onFocus={() => onFocusInput(true)}
-                      className="pplrinput"
-                      type="text"
-                      placeholder="Your Name" />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label className="pplrlabel">Image</Form.Label>
-                    <Form.Control onChange={handleFile}  type="file" accept="image/*"></Form.Control>
-                  </Form.Group>
+                  {product.product_type === "Sketchbooks" &&
+                     <Form.Group>
+                     <Form.Label className="pplrlabel">Name Personalisation</Form.Label>
+                     <Form.Control
+                       onChange={(e: any) => handleInput(e.target.value)}
+                       onFocus={() => onFocusInput(true)}
+                       className="pplrinput"
+                       type="text"
+                       placeholder="Your Name" />
+                   </Form.Group>
+                  }
+                  {product.product_type === "Sketchbooks" &&
+                    <Form.Group>
+                      <Form.Label className="pplrlabel">Image</Form.Label>
+                      <Form.Control onChange={handleFile}  type="file" accept="image/*"></Form.Control>
+                    </Form.Group>
+                  }
                   {product.options.map((option: ProductOption, i: number) => {
                     return (
                       <Form.Group key={i}>

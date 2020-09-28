@@ -83,6 +83,61 @@ export const FETCH_CUSTOMER = gql`
   }
 `
 
+export const FETCH_CHECKOUT = gql`
+  query Checkout($id: ID!)
+  {
+    node(id: $id) {
+    ... on Checkout {
+        id
+        webUrl
+        lineItemsSubtotalPrice {
+          amount
+          currencyCode
+        }
+        createdAt
+        currencyCode
+        email
+        totalPriceV2 {
+          amount
+          currencyCode
+        }
+        lineItems(first: 100) {
+          edges {
+            node {
+              id
+              quantity
+              title
+              unitPrice {
+                amount
+                currencyCode
+              }
+              variant {
+                id
+                title
+                sku
+                image {
+                  id
+                  altText
+                  originalSrc
+                  originalSrc
+                }
+                priceV2 {
+                  amount
+                  currencyCode
+                }
+              }
+              customAttributes {
+                  key
+                  value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
 export const FETCH_PRODUCT_DETAIL = gql`
   query Product($first: Int!, $query: String!)
   {

@@ -1,12 +1,14 @@
 import './styles.scss'
 import React, {useState} from 'react'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { Container, Form, Button, Alert, Spinner } from 'react-bootstrap'
 import { LOGIN } from '../../apollo/Mutation'
+import { FETCH_CUSTOMER } from '../../apollo/Query'
 import useInputState from '../../hooks/useInputState'
-import { setIsAuthenticated } from '../../stores/actions'
+import { setIsAuthenticated, setAuthMessage } from '../../stores/actions'
+import { parseUser } from '../../stores/actions'
 
 function Login() {
   const dispatch = useDispatch()
@@ -14,8 +16,27 @@ function Login() {
   const [error, setError] = useState('')
   const [password, handlePassword] = useInputState('')
   const [email, handleEmail] = useInputState('')
-  const isAuthenticated = useSelector((state: RootStateOrAny) => state.auth.isAuthenticated)
   const message = useSelector((state: RootStateOrAny) => state.auth.message)
+
+  const [loggedUser] = useLazyQuery(FETCH_CUSTOMER, {
+    onCompleted: (payload: any) => {
+      dispatch(parseUser(payload))
+      const {customer} = payload
+      localStorage.setItem('user', JSON.stringify(customer))
+      if (customer.lastIncompleteCheckout) {
+        localStorage.setItem('checkout', customer.lastIncompleteCheckout.id)
+      }
+      history.push('/')
+    },
+    onError: (error: any) => {
+      if (error) {
+        error = error.graphQLErrors[0].message
+        setError(error)
+        dispatch(setIsAuthenticated(false))
+      }
+    }
+  })
+
   const [login, {loading}] = useMutation(LOGIN,{
     onCompleted: (payload: any) => {
       const { customerAccessTokenCreate:{customerAccessToken, customerUserErrors} } = payload
@@ -27,7 +48,8 @@ function Login() {
         const {accessToken} = customerAccessToken
         localStorage.setItem('token', accessToken)
         dispatch(setIsAuthenticated(true))
-        history.push('/')
+        dispatch(setAuthMessage(''))
+        loggedUser({variables: {customerAccessToken: localStorage.getItem('token')}})
       }
     },
     onError: (error: any) => {

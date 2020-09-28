@@ -15,6 +15,36 @@ export const CHECKOUT_CREATE = gql`
   }
 `
 
+export const ADD_LINE_ITEMS = gql`
+  mutation checkoutLineItemsAdd($lineItems: [CheckoutLineItemInput!]!, $checkoutId: ID!) {
+    checkoutLineItemsAdd(lineItems: $lineItems, checkoutId: $checkoutId) {
+      checkout {
+        id
+      }
+      checkoutUserErrors {
+        code
+        field
+        message
+      }
+    }
+  }
+`
+
+export const DELETE_LINE_ITEMS = gql`
+  mutation checkoutLineItemsRemove($checkoutId: ID!, $lineItemIds: [ID!]!) {
+    checkoutLineItemsRemove(checkoutId: $checkoutId, lineItemIds: $lineItemIds) {
+      checkout {
+        id
+      }
+      checkoutUserErrors {
+        code
+        field
+        message
+      }
+    }
+  }
+`
+
 export const RENEW_TOKEN = gql`
   mutation customerAccessTokenRenew($customerAccessToken: String!) {
     customerAccessTokenRenew(customerAccessToken: $customerAccessToken) {
@@ -54,6 +84,19 @@ export const LOGIN = gql`
       }
       customerUserErrors {
         code
+        field
+        message
+      }
+    }
+  }
+`
+
+export const LOGOUT = gql`
+  mutation customerAccessTokenDelete($customerAccessToken: String!) {
+    customerAccessTokenDelete(customerAccessToken: $customerAccessToken) {
+      deletedAccessToken
+      deletedCustomerAccessTokenId
+      userErrors {
         field
         message
       }

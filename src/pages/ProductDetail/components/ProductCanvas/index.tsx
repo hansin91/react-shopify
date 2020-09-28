@@ -15,17 +15,6 @@ interface Props {
   imagePositionY: number
 }
 
-// const STAGE_WIDTH = 2400
-// const STAGE_HEIGHT = 2400
-// const STAGE_WIDTH_DIFF = 200
-// const STAGE_HEIGHT_DIFF_TOP = 80
-// const STAGE_HEIGHT_DIFF_BOTTOM = 200
-
-// const IMAGE_POSITION = {
-//   x: STAGE_WIDTH / 2,
-//   y: (STAGE_HEIGHT / 2) - STAGE_HEIGHT_DIFF_TOP
-// }
-
 function ProductCanvas({
   imagePositionX,
   imagePositionY,
@@ -37,8 +26,7 @@ function ProductCanvas({
   name,
   imageFile
 }: Props) {
-  // const [imagePositionX, setImagePositionX] = useState(IMAGE_POSITION.x)
-  // const [imagePositionY, setImagePositionY] = useState(IMAGE_POSITION.y)
+
   const imageRef = useRef() as any
 
       // if (canvas) {

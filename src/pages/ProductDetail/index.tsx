@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
-import api from '../../api'
 import jsPdf from 'jspdf'
 import { RootStateOrAny, useSelector } from 'react-redux'
+import { ToastContainer, toast } from 'react-toastify';
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
+import api from '../../api'
 import { FETCH_PRODUCT_DETAIL } from '../../apollo/Query'
-import { CHECKOUT_CREATE } from '../../apollo/Mutation'
+import { CHECKOUT_CREATE, ADD_LINE_ITEMS } from '../../apollo/Mutation'
 import { SpinnerLoading } from '../../components'
 import { ProductImage, ProductInfo } from './components'
 import { parseProducts } from '../../helpers'
@@ -39,10 +40,23 @@ function ProductDetail() {
       }
     })
 
-  const [checkoutCreate, {loading: checkoutLoading}] = useMutation(CHECKOUT_CREATE, {
+  const [checkoutCreate] = useMutation(CHECKOUT_CREATE, {
     onCompleted: (payload: any) => {
       const {checkoutCreate:{checkout:{id}}} = payload
       localStorage.setItem('checkout', id)
+      toast.success(`${productDetail.title} is added to cart`)
+    },
+    onError: (error: any) => {
+      if (error) {
+        error = error.graphQLErrors[0].message
+        setError(error)
+      }
+    }
+  })
+
+  const [addLineItems] = useMutation(ADD_LINE_ITEMS, {
+    onCompleted: (payload: any) => {
+      toast.success(`${productDetail.title} is added to cart`)
     },
     onError: (error: any) => {
       if (error) {
@@ -67,7 +81,7 @@ function ProductDetail() {
   const convertCanvasToPDF = () => {
     const pdf = new jsPdf('l', 'pt', [canvas.width(), canvas.height()])
     pdf.addImage(
-      canvas.toDataURL({ pixelRatio: 1 }),
+      canvas.toDataURL(),
       0,
       0,
       canvas.width(),
@@ -148,8 +162,6 @@ function ProductDetail() {
     //   })
     // }
     if (user) {
-      console.log(user)
-      // console.log(payload)
       const {quantity, selectedProduct} = payload
       let url = ''
       if (canvas) {
@@ -157,10 +169,14 @@ function ProductDetail() {
         const {file:{location}} = await uploadPDFFile(pdf, selectedProduct.id)
         url = location
       }
+      let customAttributes = [] as any
+      if (url) {
+        customAttributes = [{key: "url", value: url}]
+      }
       const lineItems = [{
         variantId: selectedProduct.id,
         quantity,
-        customAttributes: [{key: "url", value: url}]
+        customAttributes
       }]
       const input = {
         lineItems,
@@ -168,6 +184,8 @@ function ProductDetail() {
       }
       if (!user.lastIncompleteCheckout) {
         checkoutCreate({variables: {input} })
+      } else {
+        addLineItems({variables: {checkoutId: localStorage.getItem('checkout'), lineItems}})
       }
     }
     // const canvas = document.getElementsByTagName('canvas')[0]
@@ -194,6 +212,11 @@ function ProductDetail() {
       <Container>
         {productDetail &&
           <div className="row">
+            <ToastContainer
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              position={'top-right'} />
             <ProductImage
               onCanvasVisible={onCanvasVisible}
               onSetImagePositionY={onSetImagePositionY}

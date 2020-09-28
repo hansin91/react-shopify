@@ -11,7 +11,7 @@ export const setAuthMessage = (message: string) => ({
   payload: message
 })
 
-const setLoggedUser = (user: User) => ({
+export const setLoggedUser = (user: any) => ({
   type: SET_LOGGED_USER,
   payload: user
 })
